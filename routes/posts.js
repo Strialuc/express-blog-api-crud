@@ -4,37 +4,30 @@ const express = require('express');
 //creo istanza oggetto rotte
 const router = express.Router();
 
-//importo lista posts da posts.js
-const listaPosts = require('../data/postsList')
+//importo postcontroller
+const postsController = require('../controllers/postsController');
 
 //rotte di crud
 
 // index
-router.get('/', function (req, res) {
-    res.json({ numeroPosts: listaPosts.length, listaPosts });
-});
+router.get('/', postsController.index);
 
 // show
-router.get('/:id', function (req, res) {
-    res.send('Dettagli del post ' + req.params.id);
-});
+router.get('/:id', postsController.show);
 
 // store
-router.post('/', function (req, res) {
-    res.send('Creazione nuovo post');
-});
+router.post('/', postsController.store);
+
 // update
-router.put('/:id', function (req, res) {
-    res.send('Modifica integrale del post ' + req.params.id);
-});
+router.put('/:id', postsController.update);
+
 // modify
 router.patch('/:id', function (req, res) {
     res.send('Modifica parziale del post ' + req.params.id);
 });
+
 // destroy
-router.delete('/:id', function (req, res) {
-    res.send('Eliminazione del post ' + req.params.id);
-});
+router.delete('/:id', postsController.destroy);
 
 //esporto istanza rootte
 module.exports = router;
