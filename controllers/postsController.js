@@ -24,7 +24,21 @@ function modify(req, res) {
 }
 
 function destroy(req, res) {
-    res.send('Eliminazione del post ' + req.params.id);
+    //recupero l'id dall'URL e lo trasformo in un numero con parse int
+    const id = parseInt(req.params.id)
+    //metodo find per trovare il post usando id
+    const post = listaPosts.find((pst) => pst.id === id)
+    //valido che il post esista
+    if (!post) {
+        return res.status(404).json({
+            error: 'not found - errore 404',
+            message: 'prodotto non trovato'
+        });
+    }
+    //rimuovo post con metodo splice 
+    listaPosts.splice(listaPosts.indexOf(post), 1);
+    // forziamo status secondo convenzioni REST che chiude anche function
+    res.sendStatus(204)
 }
 
 // esportiamo tutto
