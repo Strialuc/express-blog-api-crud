@@ -8,7 +8,17 @@ function index(req, res) {
 }
 
 function show(req, res) {
-    res.send('Dettagli del post ' + req.params.id);
+    const id = parseInt(req.params.id)
+
+    const postId = listaPosts.find((post) => post.id === id)
+
+    if (!postId) {
+        return res.status(404).json({
+            error: 'not found - errore 404',
+            message: 'prodotto non trovato'
+        });
+    }
+    res.json(postId);
 }
 
 function store(req, res) {
