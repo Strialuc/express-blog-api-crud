@@ -22,9 +22,7 @@ router.post('/', postsController.store);
 router.put('/:id', postsController.update);
 
 // modify
-router.patch('/:id', function (req, res) {
-    res.send('Modifica parziale del post ' + req.params.id);
-});
+router.patch('/:id', postsController.modify);
 
 // destroy
 router.delete('/:id', postsController.destroy);
