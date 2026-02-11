@@ -78,7 +78,28 @@ function update(req, res) {
 }
 
 function modify(req, res) {
-    res.send('Modifica parziale del post ' + req.params.id);
+    // trasformo l id in un numero 
+    const id = parseInt(req.params.id)
+
+    // Metodo find per trovare il post da modificare 
+    const myPost = listaPosts.find((post) => post.id === id)
+    if (!myPost) {
+        return res.status(404).json({
+            error: 'not found - errore 404',
+            message: 'prodotto non trovato'
+        });
+    }
+    //aggiurno il post riassegnando valori delle proprita all'interno dell'oggetto
+    // operatore terniaro per individuare le propetà da modificare
+    req.body.title ? myPost.title = req.body.title : myPost.title = myPost.title
+    req.body.content ? myPost.content = req.body.content : myPost.content = myPost.content
+    req.body.tags ? myPost.tags = req.body.tags : myPost.tags = myPost.tags
+    req.body.image ? myPost.image = req.body.image : myPost.image = myPost.image
+    //controllo
+    console.log(listaPosts);
+    //restitrusco json aggiornato
+    res.json(myPost)
+
 }
 
 function destroy(req, res) {
