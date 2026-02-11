@@ -3,8 +3,16 @@
 const listaPosts = require('../data/postsList')
 
 function index(req, res) {
-    res.json({ numeroPosts: listaPosts.length, listaPosts });
-    // copiamo la logica dell'index
+
+    let filteredList = listaPosts;
+
+    if (req.query.tags) {
+        filteredList = listaPosts.filter(
+            post => post.tags.includes(req.query.tags)
+        );
+    }
+
+    res.json({ numeroPosts: filteredList.length, filteredList });
 }
 
 function show(req, res) {
