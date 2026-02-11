@@ -54,7 +54,27 @@ function store(req, res) {
 }
 
 function update(req, res) {
-    res.send('Modifica integrale del post ' + req.params.id);
+    // trasformo l id in un numero 
+    const id = parseInt(req.params.id)
+
+    const myPost = listaPosts.find((post) => post.id === id)
+    if (!myPost) { //SE  myPost non esiste l operatore logico NOT ritorna lo status error
+        return res.status(404).json({
+            error: 'not found - errore 404',
+            message: 'prodotto non trovato'
+        });
+    }
+    //aggiorno il post
+    myPost.title = req.body.title;
+    myPost.content = req.body.content
+    myPost.image = req.body.image
+    myPost.tags = req.body.tags
+    //controllo
+    console.log(listaPosts);
+
+    //restitrusco post appena aggiornato
+    res.json(myPost)
+
 }
 
 function modify(req, res) {
